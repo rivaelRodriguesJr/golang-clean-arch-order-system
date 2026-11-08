@@ -76,6 +76,57 @@ docker compose down
 
 Após a inicialização, as três interfaces estarão disponíveis simultaneamente.
 
+
+### 0. Criando Orders
+
+O projeto disponibiliza um script para realizar a carga inicial de Orders automaticamente, utilizando a REST API.
+
+#### Executando a carga de dados
+
+Com a aplicação em execução, execute o script na raiz do projeto:
+
+```bash
+bash scripts/seed_orders.sh
+```
+
+O script realizará requisições `POST` para o endpoint `/order`, cadastrando cinco Orders de exemplo.
+
+**Endpoint utilizado:**
+
+```http
+POST http://localhost:8000/order
+Content-Type: application/json
+```
+
+#### Criando uma Order manualmente
+
+Caso deseje cadastrar uma Order individualmente, utilize a requisição disponibilizada no arquivo [`api/list_order.http`](./api/list_order.http).
+
+Abra o arquivo no VS Code e execute a requisição `POST /order` utilizando a extensão [REST Client](https://marketplace.visualstudio.com/items?itemName=humao.rest-client).
+
+**Exemplo de payload:**
+
+```json
+{
+  "id": "0002",
+  "price": 100.5,
+  "tax": 0.5
+}
+```
+
+Também é possível realizar o cadastro utilizando cURL:
+
+```bash
+curl -X POST http://localhost:8000/order \
+  -H "Content-Type: application/json" \
+  -d '{
+    "id": "0002",
+    "price": 100.5,
+    "tax": 0.5
+  }'
+```
+
+
 ### 1. REST API
 
 A listagem de Orders pode ser acessada pelo endpoint:
@@ -95,6 +146,7 @@ curl http://localhost:8000/order
 O projeto também disponibiliza uma requisição HTTP pronta em [`api/list_order.http`](./api/list_order.http).
 
 Para executá-la, utilize a extensão [REST Client](https://marketplace.visualstudio.com/items?itemName=humao.rest-client) do VS Code.
+
 
 ### 2. gRPC
 
